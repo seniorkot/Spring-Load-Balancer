@@ -1,0 +1,9 @@
+# IntelliJ IDEA workspace
+.idea/
+*.iml
+
+# Build files
+target/
+
+# Production properties file
+/src/main/resources/application-prod.properties
