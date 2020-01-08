@@ -6,6 +6,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import ru.ifmo.olimp.loadbalancer.config.LoadBalancerProperties;
 
 /**
  * Application main class.
@@ -15,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 1.0
  */
 @SpringBootApplication
+@EnableConfigurationProperties({LoadBalancerProperties.class})
 public class LoadBalancerApplication implements ApplicationRunner {
 
     private Logger logger = LoggerFactory.getLogger(LoadBalancerApplication.class);
