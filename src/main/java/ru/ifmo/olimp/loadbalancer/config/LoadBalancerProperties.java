@@ -1,6 +1,7 @@
 package ru.ifmo.olimp.loadbalancer.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import ru.ifmo.olimp.loadbalancer.domain.enums.Mode;
 import ru.ifmo.olimp.loadbalancer.domain.model.Endpoint;
 
 import java.util.List;
@@ -17,8 +18,9 @@ public class LoadBalancerProperties {
 
     /**
      * Application mode: see {@link Mode}.
+     * Default: Round Robin.
      */
-    private Mode mode;
+    private Mode mode = Mode.ROUND_ROBIN;
 
     /**
      * Load Balancer endpoints: see {@link Endpoint}.
@@ -43,15 +45,5 @@ public class LoadBalancerProperties {
 
     public void setEndpoints(List<Endpoint> endpoints) {
         this.endpoints = endpoints;
-    }
-
-    /**
-     * Load Balancer application mode enum.<br>
-     * 1) Round Robin.<br>
-     * 2) Session Persistence.<br>
-     * 3) URL mapping.
-     */
-    public enum Mode {
-        ROUND_ROBIN, SESSION_PERSISTENCE, URL_MAPPING
     }
 }
