@@ -20,7 +20,7 @@ import ru.ifmo.olimp.loadbalancer.config.LoadBalancerProperties;
 @EnableConfigurationProperties({LoadBalancerProperties.class})
 public class LoadBalancerApplication implements ApplicationRunner {
 
-    private Logger logger = LoggerFactory.getLogger(LoadBalancerApplication.class);
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Main method.<br>

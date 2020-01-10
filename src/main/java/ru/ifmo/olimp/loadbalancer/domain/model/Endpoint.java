@@ -53,4 +53,11 @@ public class Endpoint implements Serializable {
     public void setPath(String path) {
         this.path = path;
     }
+
+    /*** Methods ***/
+
+    @Override
+    public String toString() {
+        return this.host + ":" + this.port + (this.path != null ? this.path : "");
+    }
 }

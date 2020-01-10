@@ -20,4 +20,12 @@ public interface LoadBalancerService {
      * @return fetched {@link Endpoint} entity.
      */
     Endpoint getEndpoint();
+
+    /**
+     * Checks server for availability and returns the result.
+     *
+     * @param index Endpoint index
+     * @return true - server is online
+     */
+    boolean isOnline(int index);
 }

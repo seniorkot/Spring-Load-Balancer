@@ -21,4 +21,9 @@ public class RoundRobinServiceImpl implements LoadBalancerService {
     public Endpoint getEndpoint() {
         return null;
     }
+
+    @Override
+    public boolean isOnline(int index) {
+        return false;
+    }
 }

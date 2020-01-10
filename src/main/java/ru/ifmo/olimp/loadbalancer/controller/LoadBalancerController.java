@@ -1,6 +1,8 @@
 package ru.ifmo.olimp.loadbalancer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ifmo.olimp.loadbalancer.config.LoadBalancerProperties;
 import ru.ifmo.olimp.loadbalancer.service.LoadBalancerService;
@@ -9,6 +11,9 @@ import ru.ifmo.olimp.loadbalancer.service.impl.SessionPersistenceServiceImpl;
 import ru.ifmo.olimp.loadbalancer.service.impl.UrlMappingServiceImpl;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * This REST controller receives HTTP requests and redirects
@@ -20,6 +25,7 @@ import javax.annotation.PostConstruct;
  * @since 1.0
  */
 @RestController
+@RequestMapping("/")
 public class LoadBalancerController {
 
     @Autowired
@@ -44,5 +50,17 @@ public class LoadBalancerController {
                 service = new UrlMappingServiceImpl();
                 break;
         }
+    }
+
+    /**
+     * This method receives all API calls and redirects them to the
+     * backend using Load Balancer service.
+     *
+     * @param request Incoming request
+     * @return Received response
+     */
+    @RequestMapping(value = "/api/**", method = {GET, POST, PUT, DELETE})
+    public ResponseEntity redirectApiRequest(HttpServletRequest request) {
+        return null;
     }
 }
