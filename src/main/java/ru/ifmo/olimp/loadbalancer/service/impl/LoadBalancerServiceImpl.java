@@ -41,12 +41,13 @@ abstract class LoadBalancerServiceImpl implements LoadBalancerService {
         HttpHeaders headers = new HttpHeaders();
         StringBuilder cookies = new StringBuilder();
 
-        for (Cookie cookie : request.getCookies()) {
-            cookies.append(cookie.getName()).append("=").append(cookie.getValue()).append(";");
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                cookies.append(cookie.getName()).append("=").append(cookie.getValue()).append(";");
+            }
+            headers.add("Cookie", cookies.toString());
         }
-
         headers.add("Content-Type", "application/json");
-        headers.add("Cookie", cookies.toString());
 
         try {
             req = new HttpEntity<>(request.getReader().lines().collect(Collectors.joining()), headers);

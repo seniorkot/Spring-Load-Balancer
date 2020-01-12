@@ -1,10 +1,6 @@
 package ru.ifmo.olimp.loadbalancer.domain.model;
 
-import org.springframework.scheduling.annotation.Scheduled;
-
 import java.io.Serializable;
-import java.net.URI;
-import java.net.URL;
 
 /**
  * Endpoint entity class.

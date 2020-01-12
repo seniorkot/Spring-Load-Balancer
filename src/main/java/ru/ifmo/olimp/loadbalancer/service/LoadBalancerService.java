@@ -1,6 +1,5 @@
 package ru.ifmo.olimp.loadbalancer.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.ifmo.olimp.loadbalancer.domain.model.Endpoint;

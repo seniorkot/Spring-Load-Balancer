@@ -1,13 +1,15 @@
 package ru.ifmo.olimp.loadbalancer.service.impl;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.UriComponentsBuilder;
 import ru.ifmo.olimp.loadbalancer.domain.model.Endpoint;
 import ru.ifmo.olimp.loadbalancer.service.LoadBalancerService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 /**
  * Implementation of {@link LoadBalancerService} with
@@ -20,41 +22,40 @@ import java.util.List;
  * @since 1.0
  */
 @Service
-public class SessionPersistenceServiceImpl extends LoadBalancerServiceImpl {
+@Scope(value = WebApplicationContext.SCOPE_APPLICATION)
+public class SessionPersistenceServiceImpl extends RoundRobinServiceImpl {
 
-    private List<Endpoint> endpoints = new ArrayList<>();
+    /**
+     * Session endpoint attribute name.
+     */
+    private static final String SESSION_ENDPOINT_ATTRIBUTE = "endpoint";
+
+    /*** Constructor ***/
+
+    public SessionPersistenceServiceImpl() {
+        super();
+    }
+
+    /*** Methods ***/
 
     @Override
     public ResponseEntity<String> redirectRequest(HttpServletRequest request) {
-        return null;
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder
+                .fromHttpUrl(fetchEndpoint(request.getSession()).toUrlString() + request.getServletPath());
+        return buildRequest(uriBuilder, request);
     }
 
-    public Endpoint fetchEndpoint() {
-        return null;
-    }
-
-    @Override
-    public List<Endpoint> getEndpoints() {
-        return null;
-    }
-
-    @Override
-    public Endpoint getEndpoint(int index) {
-        return null;
-    }
-
-    @Override
-    public void setEndpoints(List<Endpoint> endpoints) {
-
-    }
-
-    @Override
-    public void addEndpoint(Endpoint endpoint) {
-
-    }
-
-    @Override
-    public void removeEndpoint(int index) {
-
+    /**
+     * Fetches an endpoint via Session Persistence algorithm.
+     * First it checks for session attribute 'endpoint' and after
+     * fetches new endpoint via Round Robin algorithm.
+     *
+     * @return Fetched endpoint
+     */
+    public Endpoint fetchEndpoint(HttpSession session) {
+        if (session.getAttribute(SESSION_ENDPOINT_ATTRIBUTE) == null) {
+            session.setAttribute(SESSION_ENDPOINT_ATTRIBUTE, super.fetchEndpoint());
+        }
+        return (Endpoint) session.getAttribute(SESSION_ENDPOINT_ATTRIBUTE);
     }
 }
