@@ -1,9 +1,12 @@
 package ru.ifmo.olimp.loadbalancer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import ru.ifmo.olimp.loadbalancer.config.LoadBalancerProperties;
 import ru.ifmo.olimp.loadbalancer.service.LoadBalancerService;
 import ru.ifmo.olimp.loadbalancer.service.impl.RoundRobinServiceImpl;
@@ -25,7 +28,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  * @since 1.0
  */
 @RestController
-@RequestMapping("/")
 public class LoadBalancerController {
 
     @Autowired
@@ -50,17 +52,27 @@ public class LoadBalancerController {
                 service = new UrlMappingServiceImpl();
                 break;
         }
+        service.setEndpoints(properties.getEndpoints());
     }
 
     /**
      * This method receives all API calls and redirects them to the
-     * backend using Load Balancer service.
+     * backend using Load Balancer service. Client & Server error
+     * handling provided.
      *
      * @param request Incoming request
      * @return Received response
      */
     @RequestMapping(value = "/api/**", method = {GET, POST, PUT, DELETE})
-    public ResponseEntity redirectApiRequest(HttpServletRequest request) {
-        return null;
+    public ResponseEntity<String> redirectApiRequest(HttpServletRequest request) {
+        ResponseEntity<String> response;
+        try {
+            response = service.redirectRequest(request);
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            response = ResponseEntity.status(e.getStatusCode())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(e.getResponseBodyAsString());
+        }
+        return response;
     }
 }

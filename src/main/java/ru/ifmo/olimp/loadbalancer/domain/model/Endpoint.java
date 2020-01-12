@@ -1,6 +1,10 @@
 package ru.ifmo.olimp.loadbalancer.domain.model;
 
+import org.springframework.scheduling.annotation.Scheduled;
+
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URL;
 
 /**
  * Endpoint entity class.
@@ -58,6 +62,10 @@ public class Endpoint implements Serializable {
 
     @Override
     public String toString() {
-        return this.host + ":" + this.port + (this.path != null ? this.path : "");
+        return "http://" + this.host + ":" + this.port + (this.path != null ? this.path : "");
+    }
+
+    public URI toUri() {
+        return URI.create(toString());
     }
 }
