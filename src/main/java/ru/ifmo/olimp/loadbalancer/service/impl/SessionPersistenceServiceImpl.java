@@ -53,9 +53,11 @@ public class SessionPersistenceServiceImpl extends RoundRobinServiceImpl {
      * @return Fetched endpoint
      */
     public Endpoint fetchEndpoint(HttpSession session) {
-        if (session.getAttribute(SESSION_ENDPOINT_ATTRIBUTE) == null) {
-            session.setAttribute(SESSION_ENDPOINT_ATTRIBUTE, super.fetchEndpoint());
+        Endpoint endpoint = (Endpoint) session.getAttribute(SESSION_ENDPOINT_ATTRIBUTE);
+        if (endpoint == null || !isOnline(endpoint)) {
+            endpoint = super.fetchEndpoint();
+            session.setAttribute(SESSION_ENDPOINT_ATTRIBUTE, endpoint);
         }
-        return (Endpoint) session.getAttribute(SESSION_ENDPOINT_ATTRIBUTE);
+        return endpoint;
     }
 }
