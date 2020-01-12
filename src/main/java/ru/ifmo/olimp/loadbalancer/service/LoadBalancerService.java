@@ -30,13 +30,6 @@ public interface LoadBalancerService {
     ResponseEntity<String> redirectRequest(HttpServletRequest request);
 
     /**
-     * Returns an endpoint according to selected algorithm.
-     *
-     * @return fetched {@link Endpoint} entity
-     */
-    Endpoint fetchEndpoint();
-
-    /**
      * Returns a full list of endpoint.
      *
      * @return list of {@link Endpoint} entities

@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * An exception thrown when all backend servers are offline.
+ * An exception thrown when all backend servers are unavailable.
  *
  * @author seniorkot
  * @version 1.0

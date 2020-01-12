@@ -65,7 +65,7 @@ public class Endpoint implements Serializable {
         return "http://" + this.host + ":" + this.port + (this.path != null ? this.path : "");
     }
 
-    public URI toUri() {
-        return URI.create(toString());
+    public String toUrlString() {
+        return "http://" + this.host + ":" + this.port;
     }
 }

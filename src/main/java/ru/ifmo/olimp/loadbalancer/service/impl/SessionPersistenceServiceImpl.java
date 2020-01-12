@@ -29,7 +29,6 @@ public class SessionPersistenceServiceImpl extends LoadBalancerServiceImpl {
         return null;
     }
 
-    @Override
     public Endpoint fetchEndpoint() {
         return null;
     }
