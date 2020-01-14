@@ -7,7 +7,7 @@ Spring Boot application implementing 3 Load Balancer algorithms: Round Robin, Se
 * Pure Maven: `mvn clean package`<br>
 
 ## Run
-* Built jar file (<i>./target dir)</i>: `java -jar landing-1.0.jar [--port] [--mode]`<br>
+* Built jar file (<i>./target dir)</i>: `java -jar landing-1.0.jar [--port] [--mode] [--config]`<br>
 * Spring Boot Maven plugin (<i>root dir</i>): `mvn spring-boot:run`
 
 ### Arguments:
@@ -15,7 +15,12 @@ Spring Boot application implementing 3 Load Balancer algorithms: Round Robin, Se
 <b>mode</b> - Load Balancer mode:
 * round_robin - Round Robin
 * session_persistence - Session Persistence (<i>Default mode</i>)
-* url_mapping - URL Mapping
+* url_mapping - URL Mapping<br>
+
+<b>config</b> - Config file with list of endpoints on each line (<i>overrides properties file</i>):<br>
+
+`http://localhost:8081` - Round Robin & Session Persistence endpoint example<br>
+`http://localhost:8081/api/music` - URL Mapping endpoint example<br>
 
 ## Application properties
 [application.properties](https://github.com/seniorkot/Spring-Load-Balancer/blob/master/src/main/resources/application.properties)<br>
@@ -28,7 +33,7 @@ Spring Boot application implementing 3 Load Balancer algorithms: Round Robin, Se
 For current version this file contains only a list of endpoints:<br>
 `loadbalancer.endpoints[0].host=localhost`<br>
 `loadbalancer.endpoints[0].port=8081`<br>
-`loadbalancer.endpoints[0].port=/api/music`<br>
+`loadbalancer.endpoints[0].path=/api/music`<br>
 
 ## Application modes
 ### Round Robin

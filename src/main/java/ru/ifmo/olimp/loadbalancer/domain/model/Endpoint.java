@@ -1,6 +1,8 @@
 package ru.ifmo.olimp.loadbalancer.domain.model;
 
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Endpoint entity class.
@@ -63,5 +65,21 @@ public class Endpoint implements Serializable {
 
     public String toUrlString() {
         return "http://" + this.host + ":" + this.port;
+    }
+
+    /**
+     * Parses URI string and returns new Endpoint object.
+     *
+     * @param uriStr URI string
+     * @return Created Endpoint object
+     * @throws URISyntaxException Incorrect URI syntax exception
+     */
+    public static Endpoint parseUriString(String uriStr) throws URISyntaxException {
+        URI uri = new URI(uriStr);
+        Endpoint endpoint = new Endpoint();
+        endpoint.setHost(uri.getHost());
+        endpoint.setPort(uri.getPort());
+        endpoint.setPath(uri.getPath());
+        return endpoint;
     }
 }
