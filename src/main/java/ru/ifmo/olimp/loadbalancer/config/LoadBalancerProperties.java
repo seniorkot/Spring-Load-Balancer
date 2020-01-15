@@ -18,9 +18,8 @@ public class LoadBalancerProperties {
 
     /**
      * Application mode: see {@link Mode}.
-     * Default: Round Robin.
      */
-    private Mode mode = Mode.ROUND_ROBIN;
+    private Mode mode;
 
     /**
      * Load Balancer endpoints: see {@link Endpoint}.

@@ -75,7 +75,16 @@ public class Endpoint implements Serializable {
      * @throws URISyntaxException Incorrect URI syntax exception
      */
     public static Endpoint parseUriString(String uriStr) throws URISyntaxException {
-        URI uri = new URI(uriStr);
+        return parseUri(new URI(uriStr));
+    }
+
+    /**
+     * Parses URI and returns new {@link Endpoint} object.
+     *
+     * @param uri URI object
+     * @return Created Endpoint object
+     */
+    public static Endpoint parseUri(URI uri) {
         Endpoint endpoint = new Endpoint();
         endpoint.setHost(uri.getHost());
         endpoint.setPort(uri.getPort());
