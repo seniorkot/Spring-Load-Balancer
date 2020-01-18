@@ -9,11 +9,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import ru.ifmo.olimp.loadbalancer.config.LoadBalancerProperties;
 import ru.ifmo.olimp.loadbalancer.service.LoadBalancerService;
-import ru.ifmo.olimp.loadbalancer.service.impl.RoundRobinServiceImpl;
-import ru.ifmo.olimp.loadbalancer.service.impl.SessionPersistenceServiceImpl;
-import ru.ifmo.olimp.loadbalancer.service.impl.UrlMappingServiceImpl;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -30,28 +28,21 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 public class LoadBalancerController {
 
-    @Autowired
-    private LoadBalancerProperties properties;
-
+    @Resource(name = "${loadbalancer.mode}")
     private LoadBalancerService service;
 
+    private final LoadBalancerProperties properties;
+
+    @Autowired
+    public LoadBalancerController(LoadBalancerProperties properties) {
+        this.properties = properties;
+    }
+
     /**
-     * PostConstruct method to init service variable
-     * according to mode properties value.
+     * PostConstruct method to set endpoints in service.
      */
     @PostConstruct
     public void init() {
-        switch (properties.getMode()) {
-            case ROUND_ROBIN:
-                service = new RoundRobinServiceImpl();
-                break;
-            case SESSION_PERSISTENCE:
-                service = new SessionPersistenceServiceImpl();
-                break;
-            case URL_MAPPING:
-                service = new UrlMappingServiceImpl();
-                break;
-        }
         service.setEndpoints(properties.getEndpoints());
     }
 

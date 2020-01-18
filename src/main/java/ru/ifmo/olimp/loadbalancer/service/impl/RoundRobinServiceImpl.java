@@ -21,7 +21,7 @@ import java.util.List;
  * @version 1.0
  * @since 1.0
  */
-@Service
+@Service(value = "round_robin")
 public class RoundRobinServiceImpl extends LoadBalancerServiceImpl {
 
     /**

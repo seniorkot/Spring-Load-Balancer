@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 1.0
  */
-@Service
+@Service(value = "url_mapping")
 public class UrlMappingServiceImpl extends LoadBalancerServiceImpl {
 
     private Map<String, List<Endpoint>> endpoints;

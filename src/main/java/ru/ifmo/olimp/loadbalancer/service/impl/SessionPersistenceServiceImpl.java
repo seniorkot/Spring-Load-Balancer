@@ -1,9 +1,7 @@
 package ru.ifmo.olimp.loadbalancer.service.impl;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.ifmo.olimp.loadbalancer.domain.model.Endpoint;
 import ru.ifmo.olimp.loadbalancer.service.LoadBalancerService;
@@ -21,8 +19,7 @@ import javax.servlet.http.HttpSession;
  * @version 1.0
  * @since 1.0
  */
-@Service
-@Scope(value = WebApplicationContext.SCOPE_APPLICATION)
+@Service(value = "session_persistence")
 public class SessionPersistenceServiceImpl extends RoundRobinServiceImpl {
 
     /**
