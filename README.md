@@ -7,8 +7,8 @@ Spring Boot application implementing 3 Load Balancer algorithms: Round Robin, Se
 * Pure Maven: `mvn clean package`<br>
 
 ## Run
-* Built jar file (<i>./target dir)</i>: `java -jar landing-1.0.jar [--port] [--mode] [--config]`<br>
-* Spring Boot Maven plugin (<i>root dir</i>): `mvn spring-boot:run`
+* Built jar file (<i>./target dir)</i>: `java -jar landing-1.0.jar [--port=<port>] [--mode=<mode>] [--config=<filename(s)>]`<br>
+* Spring Boot Maven plugin (<i>root dir</i>): `mvn spring-boot:run [-Drun.arguments=[--port=<port>],[--mode=<mode>],[--config=<filename(s)>]]`
 
 ### Arguments:
 <b>port</b> - application server port. Default: <i>8080</i><br>
@@ -30,21 +30,23 @@ Spring Boot application implementing 3 Load Balancer algorithms: Round Robin, Se
 
 [application-dev.properties](https://github.com/seniorkot/Spring-Load-Balancer/blob/master/src/main/resources/application-dev.properties) / application-prod.properties<br>
 
-For current version this file contains only a list of endpoints:<br>
+For the current version this file contains only a list of endpoints:<br>
 `loadbalancer.endpoints[0].host=localhost`<br>
 `loadbalancer.endpoints[0].port=8081`<br>
 `loadbalancer.endpoints[0].path=/api/music`<br>
 
 ## Application modes
 ### Round Robin
-With new request an endpoint next in list is fetched (cyclically).<br>
+With a new request the next endpoint in the list is fetched (cyclically).<br>
 
-To use this algorithm provide at least one endpoint with <i>host</i> & <i>port</i>.
+To use this algorithm, provide at least one endpoint with a <i>host</i> & <i>port</i>.
 ### Session Persistence
-Same algorithm as Round Robin except that for each session a concrete endpoint is saved. As the result, while session is alive, all user request are sent to one backend server.<br>
+The same algorithm as Round Robin except that a specific endpoint is saved for each session.<br> 
+As the result, while session is alive, all user requests are sent to one backend server.<br>
 
-To use this algorithm provide at least one endpoint with <i>host</i> & <i>port</i>.
+To use this algorithm, provide at least one endpoint with a <i>host</i> & <i>port</i>.
 ### URL Mapping
-Backend servers are mapped with URI path. For example: every request like `curl http://example.com:8080/api/music` will be redirected to one backend server while `curl http://example.com:8080/api/video` will be redirected to another.
+Backend servers are mapped to URI paths.<br> 
+For example: every request like `curl http://example.com:8080/api/music` will be redirected to one backend server while `curl http://example.com:8080/api/video` will be redirected to another.
 
-To use this algorithm provide at least one endpoint with <i>host</i>, <i>port</i> & <i>path</i>.
+To use this algorithm, provide at least one endpoint with a <i>host</i>, <i>port</i> & <i>path</i>.
